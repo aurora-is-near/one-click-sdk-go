@@ -19,6 +19,7 @@ Name | Type | Description | Notes
 **TimeEstimate** | **float32** | Estimated time in seconds for the swap to be executed after the deposit transaction is confirmed | 
 **VirtualChainRecipient** | Pointer to **string** | EVM address of a transfer recipient in a virtual chain | [optional] 
 **VirtualChainRefundRecipient** | Pointer to **string** | EVM address of a refund recipient in a virtual chain | [optional] 
+**CustomRecipientMsg** | Pointer to **string** | **HIGHLY EXPERIMENTAL** Message passed to &#x60;ft_transfer_call&#x60; when withdrawing assets to NEAR.  Otherwise, &#x60;ft_transfer&#x60; will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient &#x60;storage_deposit&#x60; or if the recipient does not implement &#x60;ft_on_transfer&#x60; method. | [optional] 
 
 ## Methods
 
@@ -368,6 +369,31 @@ SetVirtualChainRefundRecipient sets VirtualChainRefundRecipient field to given v
 `func (o *Quote) HasVirtualChainRefundRecipient() bool`
 
 HasVirtualChainRefundRecipient returns a boolean if a field has been set.
+
+### GetCustomRecipientMsg
+
+`func (o *Quote) GetCustomRecipientMsg() string`
+
+GetCustomRecipientMsg returns the CustomRecipientMsg field if non-nil, zero value otherwise.
+
+### GetCustomRecipientMsgOk
+
+`func (o *Quote) GetCustomRecipientMsgOk() (*string, bool)`
+
+GetCustomRecipientMsgOk returns a tuple with the CustomRecipientMsg field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomRecipientMsg
+
+`func (o *Quote) SetCustomRecipientMsg(v string)`
+
+SetCustomRecipientMsg sets CustomRecipientMsg field to given value.
+
+### HasCustomRecipientMsg
+
+`func (o *Quote) HasCustomRecipientMsg() bool`
+
+HasCustomRecipientMsg returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

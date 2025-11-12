@@ -26,7 +26,7 @@ type QuoteRequest struct {
 	Dry bool `json:"dry"`
 	// What deposit address mode you will get in the response, most chain supports only `SIMPLE` and some(for example `stellar`) only `MEMO`: - `SIMPLE` - usual deposit with only deposit address. - `MEMO` - some chains will **REQUIRE** the `memo` together with `depositAddress` for swap to work.
 	DepositMode *string `json:"depositMode,omitempty"`
-	// How to interpret `amount` when performing the swap:   - `EXACT_INPUT` - requests the output amount for an exact input.   - `EXACT_OUTPUT` - requests the input amount for an exact output. The `refundTo` address always receives any excess tokens after the swap is complete.   - `FLEX_INPUT` - a flexible input amount that allows for partial deposits and variable amounts.
+	// How to interpret `amount` (and refunds) when performing the swap:  - `EXACT_INPUT` — requests the output amount for an exact input.   - If deposit is less than `amountIn`, the deposit is refunded by deadline.   - If deposit is above than `amountIn`, the swap is processed and the excess is refunded to `refundTo` address after swap is complete.  - `EXACT_OUTPUT` — requests the input amount for an exact output.   - The quote response would have two fields `minAmountIn` and `maxAmountIn`.   - If the input is above than `maxAmountIn` the swap is processed and the excess is refunded to `refundTo` address after swap is complete.   - If the input is less than  `minAmountIn`, the deposit is refunded by deadline.  - `FLEX_INPUT` — a flexible input amount that allows for partial deposits and variable amounts.   - `slippage` applies both to `amountOut` and `amountIn` and defines an acceptable range (`minAmountIn` and `minAmountOut`).   - Any amount higher than `minAmountIn` is accepted and converted to the output asset as long as `minAmountOut` is met.   - The `amountIn` can be less, as long as the 'slippage + 1%' constraint is met. If the total received by the deadline is below the lower bound, the deposit is refunded.   - If deposits exceed the upper bound, the swap is still processed
 	SwapType string `json:"swapType"`
 	// Slippage tolerance for the swap. This value is in basis points (1/100th of a percent), e.g. 100 for 1% slippage.
 	SlippageTolerance float32 `json:"slippageTolerance"`
@@ -44,17 +44,23 @@ type QuoteRequest struct {
 	RefundType string `json:"refundType"`
 	// Recipient address. The format must match `recipientType`.
 	Recipient string `json:"recipient"`
+	// Addresses of connected wallets.
+	ConnectedWallets []string `json:"connectedWallets,omitempty"`
+	// Unique client session identifier for 1Click.
+	SessionId *string `json:"sessionId,omitempty"`
 	// EVM address of a transfer recipient in a virtual chain
 	VirtualChainRecipient *string `json:"virtualChainRecipient,omitempty"`
 	// EVM address of a refund recipient in a virtual chain
 	VirtualChainRefundRecipient *string `json:"virtualChainRefundRecipient,omitempty"`
+	// **HIGHLY EXPERIMENTAL** Message to pass to `ft_transfer_call` when withdrawing assets to NEAR.  Otherwise, `ft_transfer` will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient `storage_deposit` or if the recipient does not implement `ft_on_transfer` method.
+	CustomRecipientMsg *string `json:"customRecipientMsg,omitempty"`
 	// Type of recipient address: - `DESTINATION_CHAIN` - assets are transferred to the chain of `destinationAsset`. - `INTENTS` - assets are transferred to an account inside Intents
 	RecipientType string `json:"recipientType"`
 	// Timestamp in ISO format that identifies when the user refund begins if the swap isn't completed by then. It must exceed the time required for the deposit transaction to be mined. For example, Bitcoin may require around one hour depending on the fees paid.
 	Deadline time.Time `json:"deadline"`
 	// Referral identifier (lowercase only). It will be reflected in the on-chain data and displayed on public analytics platforms.
 	Referral *string `json:"referral,omitempty"`
-	// Time in milliseconds the user is willing to wait for a quote from the relay.
+	// Time in milliseconds the user is willing to wait for a quote from the relay. **If you want to receive the fastest quote - use `0` as a value**
 	QuoteWaitingTimeMs *float32 `json:"quoteWaitingTimeMs,omitempty"`
 	// List of recipients and their fees
 	AppFees []AppFee `json:"appFees,omitempty"`
@@ -371,6 +377,70 @@ func (o *QuoteRequest) SetRecipient(v string) {
 	o.Recipient = v
 }
 
+// GetConnectedWallets returns the ConnectedWallets field value if set, zero value otherwise.
+func (o *QuoteRequest) GetConnectedWallets() []string {
+	if o == nil || IsNil(o.ConnectedWallets) {
+		var ret []string
+		return ret
+	}
+	return o.ConnectedWallets
+}
+
+// GetConnectedWalletsOk returns a tuple with the ConnectedWallets field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRequest) GetConnectedWalletsOk() ([]string, bool) {
+	if o == nil || IsNil(o.ConnectedWallets) {
+		return nil, false
+	}
+	return o.ConnectedWallets, true
+}
+
+// HasConnectedWallets returns a boolean if a field has been set.
+func (o *QuoteRequest) HasConnectedWallets() bool {
+	if o != nil && !IsNil(o.ConnectedWallets) {
+		return true
+	}
+
+	return false
+}
+
+// SetConnectedWallets gets a reference to the given []string and assigns it to the ConnectedWallets field.
+func (o *QuoteRequest) SetConnectedWallets(v []string) {
+	o.ConnectedWallets = v
+}
+
+// GetSessionId returns the SessionId field value if set, zero value otherwise.
+func (o *QuoteRequest) GetSessionId() string {
+	if o == nil || IsNil(o.SessionId) {
+		var ret string
+		return ret
+	}
+	return *o.SessionId
+}
+
+// GetSessionIdOk returns a tuple with the SessionId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRequest) GetSessionIdOk() (*string, bool) {
+	if o == nil || IsNil(o.SessionId) {
+		return nil, false
+	}
+	return o.SessionId, true
+}
+
+// HasSessionId returns a boolean if a field has been set.
+func (o *QuoteRequest) HasSessionId() bool {
+	if o != nil && !IsNil(o.SessionId) {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionId gets a reference to the given string and assigns it to the SessionId field.
+func (o *QuoteRequest) SetSessionId(v string) {
+	o.SessionId = &v
+}
+
 // GetVirtualChainRecipient returns the VirtualChainRecipient field value if set, zero value otherwise.
 func (o *QuoteRequest) GetVirtualChainRecipient() string {
 	if o == nil || IsNil(o.VirtualChainRecipient) {
@@ -433,6 +503,38 @@ func (o *QuoteRequest) HasVirtualChainRefundRecipient() bool {
 // SetVirtualChainRefundRecipient gets a reference to the given string and assigns it to the VirtualChainRefundRecipient field.
 func (o *QuoteRequest) SetVirtualChainRefundRecipient(v string) {
 	o.VirtualChainRefundRecipient = &v
+}
+
+// GetCustomRecipientMsg returns the CustomRecipientMsg field value if set, zero value otherwise.
+func (o *QuoteRequest) GetCustomRecipientMsg() string {
+	if o == nil || IsNil(o.CustomRecipientMsg) {
+		var ret string
+		return ret
+	}
+	return *o.CustomRecipientMsg
+}
+
+// GetCustomRecipientMsgOk returns a tuple with the CustomRecipientMsg field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRequest) GetCustomRecipientMsgOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomRecipientMsg) {
+		return nil, false
+	}
+	return o.CustomRecipientMsg, true
+}
+
+// HasCustomRecipientMsg returns a boolean if a field has been set.
+func (o *QuoteRequest) HasCustomRecipientMsg() bool {
+	if o != nil && !IsNil(o.CustomRecipientMsg) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomRecipientMsg gets a reference to the given string and assigns it to the CustomRecipientMsg field.
+func (o *QuoteRequest) SetCustomRecipientMsg(v string) {
+	o.CustomRecipientMsg = &v
 }
 
 // GetRecipientType returns the RecipientType field value
@@ -602,11 +704,20 @@ func (o QuoteRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["refundTo"] = o.RefundTo
 	toSerialize["refundType"] = o.RefundType
 	toSerialize["recipient"] = o.Recipient
+	if !IsNil(o.ConnectedWallets) {
+		toSerialize["connectedWallets"] = o.ConnectedWallets
+	}
+	if !IsNil(o.SessionId) {
+		toSerialize["sessionId"] = o.SessionId
+	}
 	if !IsNil(o.VirtualChainRecipient) {
 		toSerialize["virtualChainRecipient"] = o.VirtualChainRecipient
 	}
 	if !IsNil(o.VirtualChainRefundRecipient) {
 		toSerialize["virtualChainRefundRecipient"] = o.VirtualChainRefundRecipient
+	}
+	if !IsNil(o.CustomRecipientMsg) {
+		toSerialize["customRecipientMsg"] = o.CustomRecipientMsg
 	}
 	toSerialize["recipientType"] = o.RecipientType
 	toSerialize["deadline"] = o.Deadline

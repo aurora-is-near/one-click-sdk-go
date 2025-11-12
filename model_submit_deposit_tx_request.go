@@ -25,6 +25,10 @@ type SubmitDepositTxRequest struct {
 	TxHash string `json:"txHash"`
 	// Deposit address for the quote
 	DepositAddress string `json:"depositAddress"`
+	// Sender account (used only for NEAR blockchain)
+	NearSenderAccount *string `json:"nearSenderAccount,omitempty"`
+	// Memo (use if deposit was submitted with one)
+	Memo *string `json:"memo,omitempty"`
 }
 
 type _SubmitDepositTxRequest SubmitDepositTxRequest
@@ -96,6 +100,70 @@ func (o *SubmitDepositTxRequest) SetDepositAddress(v string) {
 	o.DepositAddress = v
 }
 
+// GetNearSenderAccount returns the NearSenderAccount field value if set, zero value otherwise.
+func (o *SubmitDepositTxRequest) GetNearSenderAccount() string {
+	if o == nil || IsNil(o.NearSenderAccount) {
+		var ret string
+		return ret
+	}
+	return *o.NearSenderAccount
+}
+
+// GetNearSenderAccountOk returns a tuple with the NearSenderAccount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitDepositTxRequest) GetNearSenderAccountOk() (*string, bool) {
+	if o == nil || IsNil(o.NearSenderAccount) {
+		return nil, false
+	}
+	return o.NearSenderAccount, true
+}
+
+// HasNearSenderAccount returns a boolean if a field has been set.
+func (o *SubmitDepositTxRequest) HasNearSenderAccount() bool {
+	if o != nil && !IsNil(o.NearSenderAccount) {
+		return true
+	}
+
+	return false
+}
+
+// SetNearSenderAccount gets a reference to the given string and assigns it to the NearSenderAccount field.
+func (o *SubmitDepositTxRequest) SetNearSenderAccount(v string) {
+	o.NearSenderAccount = &v
+}
+
+// GetMemo returns the Memo field value if set, zero value otherwise.
+func (o *SubmitDepositTxRequest) GetMemo() string {
+	if o == nil || IsNil(o.Memo) {
+		var ret string
+		return ret
+	}
+	return *o.Memo
+}
+
+// GetMemoOk returns a tuple with the Memo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SubmitDepositTxRequest) GetMemoOk() (*string, bool) {
+	if o == nil || IsNil(o.Memo) {
+		return nil, false
+	}
+	return o.Memo, true
+}
+
+// HasMemo returns a boolean if a field has been set.
+func (o *SubmitDepositTxRequest) HasMemo() bool {
+	if o != nil && !IsNil(o.Memo) {
+		return true
+	}
+
+	return false
+}
+
+// SetMemo gets a reference to the given string and assigns it to the Memo field.
+func (o *SubmitDepositTxRequest) SetMemo(v string) {
+	o.Memo = &v
+}
+
 func (o SubmitDepositTxRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -108,6 +176,12 @@ func (o SubmitDepositTxRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["txHash"] = o.TxHash
 	toSerialize["depositAddress"] = o.DepositAddress
+	if !IsNil(o.NearSenderAccount) {
+		toSerialize["nearSenderAccount"] = o.NearSenderAccount
+	}
+	if !IsNil(o.Memo) {
+		toSerialize["memo"] = o.Memo
+	}
 	return toSerialize, nil
 }
 

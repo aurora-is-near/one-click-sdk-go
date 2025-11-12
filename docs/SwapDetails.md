@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **RefundedAmount** | Pointer to **string** | Amount of &#x60;originAsset&#x60; transferred to &#x60;refundTo&#x60; | [optional] 
 **RefundedAmountFormatted** | Pointer to **string** | Refunded amount in readable format | [optional] 
 **RefundedAmountUsd** | Pointer to **string** | Refunded amount equivalent in USD | [optional] 
+**Referral** | Pointer to **string** | Referral identifier | [optional] 
 
 ## Methods
 
@@ -367,6 +368,31 @@ SetRefundedAmountUsd sets RefundedAmountUsd field to given value.
 `func (o *SwapDetails) HasRefundedAmountUsd() bool`
 
 HasRefundedAmountUsd returns a boolean if a field has been set.
+
+### GetReferral
+
+`func (o *SwapDetails) GetReferral() string`
+
+GetReferral returns the Referral field if non-nil, zero value otherwise.
+
+### GetReferralOk
+
+`func (o *SwapDetails) GetReferralOk() (*string, bool)`
+
+GetReferralOk returns a tuple with the Referral field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReferral
+
+`func (o *SwapDetails) SetReferral(v string)`
+
+SetReferral sets Referral field to given value.
+
+### HasReferral
+
+`func (o *SwapDetails) HasReferral() bool`
+
+HasReferral returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

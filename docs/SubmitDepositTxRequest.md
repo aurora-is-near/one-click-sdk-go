@@ -6,6 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **TxHash** | **string** | Transaction hash of your deposit | 
 **DepositAddress** | **string** | Deposit address for the quote | 
+**NearSenderAccount** | Pointer to **string** | Sender account (used only for NEAR blockchain) | [optional] 
+**Memo** | Pointer to **string** | Memo (use if deposit was submitted with one) | [optional] 
 
 ## Methods
 
@@ -65,6 +67,56 @@ and a boolean to check if the value has been set.
 
 SetDepositAddress sets DepositAddress field to given value.
 
+
+### GetNearSenderAccount
+
+`func (o *SubmitDepositTxRequest) GetNearSenderAccount() string`
+
+GetNearSenderAccount returns the NearSenderAccount field if non-nil, zero value otherwise.
+
+### GetNearSenderAccountOk
+
+`func (o *SubmitDepositTxRequest) GetNearSenderAccountOk() (*string, bool)`
+
+GetNearSenderAccountOk returns a tuple with the NearSenderAccount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetNearSenderAccount
+
+`func (o *SubmitDepositTxRequest) SetNearSenderAccount(v string)`
+
+SetNearSenderAccount sets NearSenderAccount field to given value.
+
+### HasNearSenderAccount
+
+`func (o *SubmitDepositTxRequest) HasNearSenderAccount() bool`
+
+HasNearSenderAccount returns a boolean if a field has been set.
+
+### GetMemo
+
+`func (o *SubmitDepositTxRequest) GetMemo() string`
+
+GetMemo returns the Memo field if non-nil, zero value otherwise.
+
+### GetMemoOk
+
+`func (o *SubmitDepositTxRequest) GetMemoOk() (*string, bool)`
+
+GetMemoOk returns a tuple with the Memo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMemo
+
+`func (o *SubmitDepositTxRequest) SetMemo(v string)`
+
+SetMemo sets Memo field to given value.
+
+### HasMemo
+
+`func (o *SubmitDepositTxRequest) HasMemo() bool`
+
+HasMemo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

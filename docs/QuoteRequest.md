@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Dry** | **bool** | Flag indicating whether this is a dry run request. If &#x60;true&#x60;, the response will **NOT** contain the following fields: - &#x60;depositAddress&#x60; - &#x60;timeWhenInactive&#x60; - &#x60;deadline&#x60; | 
 **DepositMode** | Pointer to **string** | What deposit address mode you will get in the response, most chain supports only &#x60;SIMPLE&#x60; and some(for example &#x60;stellar&#x60;) only &#x60;MEMO&#x60;: - &#x60;SIMPLE&#x60; - usual deposit with only deposit address. - &#x60;MEMO&#x60; - some chains will **REQUIRE** the &#x60;memo&#x60; together with &#x60;depositAddress&#x60; for swap to work. | [optional] [default to "SIMPLE"]
-**SwapType** | **string** | How to interpret &#x60;amount&#x60; when performing the swap:   - &#x60;EXACT_INPUT&#x60; - requests the output amount for an exact input.   - &#x60;EXACT_OUTPUT&#x60; - requests the input amount for an exact output. The &#x60;refundTo&#x60; address always receives any excess tokens after the swap is complete.   - &#x60;FLEX_INPUT&#x60; - a flexible input amount that allows for partial deposits and variable amounts. | 
+**SwapType** | **string** | How to interpret &#x60;amount&#x60; (and refunds) when performing the swap:  - &#x60;EXACT_INPUT&#x60; — requests the output amount for an exact input.   - If deposit is less than &#x60;amountIn&#x60;, the deposit is refunded by deadline.   - If deposit is above than &#x60;amountIn&#x60;, the swap is processed and the excess is refunded to &#x60;refundTo&#x60; address after swap is complete.  - &#x60;EXACT_OUTPUT&#x60; — requests the input amount for an exact output.   - The quote response would have two fields &#x60;minAmountIn&#x60; and &#x60;maxAmountIn&#x60;.   - If the input is above than &#x60;maxAmountIn&#x60; the swap is processed and the excess is refunded to &#x60;refundTo&#x60; address after swap is complete.   - If the input is less than  &#x60;minAmountIn&#x60;, the deposit is refunded by deadline.  - &#x60;FLEX_INPUT&#x60; — a flexible input amount that allows for partial deposits and variable amounts.   - &#x60;slippage&#x60; applies both to &#x60;amountOut&#x60; and &#x60;amountIn&#x60; and defines an acceptable range (&#x60;minAmountIn&#x60; and &#x60;minAmountOut&#x60;).   - Any amount higher than &#x60;minAmountIn&#x60; is accepted and converted to the output asset as long as &#x60;minAmountOut&#x60; is met.   - The &#x60;amountIn&#x60; can be less, as long as the &#39;slippage + 1%&#39; constraint is met. If the total received by the deadline is below the lower bound, the deposit is refunded.   - If deposits exceed the upper bound, the swap is still processed | 
 **SlippageTolerance** | **float32** | Slippage tolerance for the swap. This value is in basis points (1/100th of a percent), e.g. 100 for 1% slippage. | 
 **OriginAsset** | **string** | ID of the origin asset. | 
 **DepositType** | **string** | Type of deposit address: - &#x60;ORIGIN_CHAIN&#x60; - deposit address on the origin chain. - &#x60;INTENTS&#x60; - the account ID within NEAR Intents to which you should transfer assets. | 
@@ -15,12 +15,15 @@ Name | Type | Description | Notes
 **RefundTo** | **string** | Address used for refunds. | 
 **RefundType** | **string** | Type of refund address: - &#x60;ORIGIN_CHAIN&#x60; - assets are refunded to the &#x60;refundTo&#x60; address on the origin chain. - &#x60;INTENTS&#x60; - assets are refunded to the &#x60;refundTo&#x60; Intents account. | 
 **Recipient** | **string** | Recipient address. The format must match &#x60;recipientType&#x60;. | 
+**ConnectedWallets** | Pointer to **[]string** | Addresses of connected wallets. | [optional] 
+**SessionId** | Pointer to **string** | Unique client session identifier for 1Click. | [optional] 
 **VirtualChainRecipient** | Pointer to **string** | EVM address of a transfer recipient in a virtual chain | [optional] 
 **VirtualChainRefundRecipient** | Pointer to **string** | EVM address of a refund recipient in a virtual chain | [optional] 
+**CustomRecipientMsg** | Pointer to **string** | **HIGHLY EXPERIMENTAL** Message to pass to &#x60;ft_transfer_call&#x60; when withdrawing assets to NEAR.  Otherwise, &#x60;ft_transfer&#x60; will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient &#x60;storage_deposit&#x60; or if the recipient does not implement &#x60;ft_on_transfer&#x60; method. | [optional] 
 **RecipientType** | **string** | Type of recipient address: - &#x60;DESTINATION_CHAIN&#x60; - assets are transferred to the chain of &#x60;destinationAsset&#x60;. - &#x60;INTENTS&#x60; - assets are transferred to an account inside Intents | 
 **Deadline** | **time.Time** | Timestamp in ISO format that identifies when the user refund begins if the swap isn&#39;t completed by then. It must exceed the time required for the deposit transaction to be mined. For example, Bitcoin may require around one hour depending on the fees paid. | 
 **Referral** | Pointer to **string** | Referral identifier (lowercase only). It will be reflected in the on-chain data and displayed on public analytics platforms. | [optional] 
-**QuoteWaitingTimeMs** | Pointer to **float32** | Time in milliseconds the user is willing to wait for a quote from the relay. | [optional] [default to 3000]
+**QuoteWaitingTimeMs** | Pointer to **float32** | Time in milliseconds the user is willing to wait for a quote from the relay. **If you want to receive the fastest quote - use &#x60;0&#x60; as a value**  | [optional] [default to 3000]
 **AppFees** | Pointer to [**[]AppFee**](AppFee.md) | List of recipients and their fees | [optional] 
 
 ## Methods
@@ -267,6 +270,56 @@ and a boolean to check if the value has been set.
 SetRecipient sets Recipient field to given value.
 
 
+### GetConnectedWallets
+
+`func (o *QuoteRequest) GetConnectedWallets() []string`
+
+GetConnectedWallets returns the ConnectedWallets field if non-nil, zero value otherwise.
+
+### GetConnectedWalletsOk
+
+`func (o *QuoteRequest) GetConnectedWalletsOk() (*[]string, bool)`
+
+GetConnectedWalletsOk returns a tuple with the ConnectedWallets field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetConnectedWallets
+
+`func (o *QuoteRequest) SetConnectedWallets(v []string)`
+
+SetConnectedWallets sets ConnectedWallets field to given value.
+
+### HasConnectedWallets
+
+`func (o *QuoteRequest) HasConnectedWallets() bool`
+
+HasConnectedWallets returns a boolean if a field has been set.
+
+### GetSessionId
+
+`func (o *QuoteRequest) GetSessionId() string`
+
+GetSessionId returns the SessionId field if non-nil, zero value otherwise.
+
+### GetSessionIdOk
+
+`func (o *QuoteRequest) GetSessionIdOk() (*string, bool)`
+
+GetSessionIdOk returns a tuple with the SessionId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSessionId
+
+`func (o *QuoteRequest) SetSessionId(v string)`
+
+SetSessionId sets SessionId field to given value.
+
+### HasSessionId
+
+`func (o *QuoteRequest) HasSessionId() bool`
+
+HasSessionId returns a boolean if a field has been set.
+
 ### GetVirtualChainRecipient
 
 `func (o *QuoteRequest) GetVirtualChainRecipient() string`
@@ -316,6 +369,31 @@ SetVirtualChainRefundRecipient sets VirtualChainRefundRecipient field to given v
 `func (o *QuoteRequest) HasVirtualChainRefundRecipient() bool`
 
 HasVirtualChainRefundRecipient returns a boolean if a field has been set.
+
+### GetCustomRecipientMsg
+
+`func (o *QuoteRequest) GetCustomRecipientMsg() string`
+
+GetCustomRecipientMsg returns the CustomRecipientMsg field if non-nil, zero value otherwise.
+
+### GetCustomRecipientMsgOk
+
+`func (o *QuoteRequest) GetCustomRecipientMsgOk() (*string, bool)`
+
+GetCustomRecipientMsgOk returns a tuple with the CustomRecipientMsg field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCustomRecipientMsg
+
+`func (o *QuoteRequest) SetCustomRecipientMsg(v string)`
+
+SetCustomRecipientMsg sets CustomRecipientMsg field to given value.
+
+### HasCustomRecipientMsg
+
+`func (o *QuoteRequest) HasCustomRecipientMsg() bool`
+
+HasCustomRecipientMsg returns a boolean if a field has been set.
 
 ### GetRecipientType
 

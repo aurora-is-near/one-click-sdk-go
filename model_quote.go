@@ -52,6 +52,8 @@ type Quote struct {
 	VirtualChainRecipient *string `json:"virtualChainRecipient,omitempty"`
 	// EVM address of a refund recipient in a virtual chain
 	VirtualChainRefundRecipient *string `json:"virtualChainRefundRecipient,omitempty"`
+	// **HIGHLY EXPERIMENTAL** Message passed to `ft_transfer_call` when withdrawing assets to NEAR.  Otherwise, `ft_transfer` will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient `storage_deposit` or if the recipient does not implement `ft_on_transfer` method.
+	CustomRecipientMsg *string `json:"customRecipientMsg,omitempty"`
 }
 
 type _Quote Quote
@@ -490,6 +492,38 @@ func (o *Quote) SetVirtualChainRefundRecipient(v string) {
 	o.VirtualChainRefundRecipient = &v
 }
 
+// GetCustomRecipientMsg returns the CustomRecipientMsg field value if set, zero value otherwise.
+func (o *Quote) GetCustomRecipientMsg() string {
+	if o == nil || IsNil(o.CustomRecipientMsg) {
+		var ret string
+		return ret
+	}
+	return *o.CustomRecipientMsg
+}
+
+// GetCustomRecipientMsgOk returns a tuple with the CustomRecipientMsg field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Quote) GetCustomRecipientMsgOk() (*string, bool) {
+	if o == nil || IsNil(o.CustomRecipientMsg) {
+		return nil, false
+	}
+	return o.CustomRecipientMsg, true
+}
+
+// HasCustomRecipientMsg returns a boolean if a field has been set.
+func (o *Quote) HasCustomRecipientMsg() bool {
+	if o != nil && !IsNil(o.CustomRecipientMsg) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomRecipientMsg gets a reference to the given string and assigns it to the CustomRecipientMsg field.
+func (o *Quote) SetCustomRecipientMsg(v string) {
+	o.CustomRecipientMsg = &v
+}
+
 func (o Quote) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -526,6 +560,9 @@ func (o Quote) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.VirtualChainRefundRecipient) {
 		toSerialize["virtualChainRefundRecipient"] = o.VirtualChainRefundRecipient
+	}
+	if !IsNil(o.CustomRecipientMsg) {
+		toSerialize["customRecipientMsg"] = o.CustomRecipientMsg
 	}
 	return toSerialize, nil
 }

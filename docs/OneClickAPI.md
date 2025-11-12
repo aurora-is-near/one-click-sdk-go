@@ -4,11 +4,88 @@ All URIs are relative to *https://1click.chaindefuser.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**GetAnyInputQuoteWithdrawals**](OneClickAPI.md#GetAnyInputQuoteWithdrawals) | **Get** /v0/any-input/withdrawals | Get ANY_INPUT withdrawals
 [**GetExecutionStatus**](OneClickAPI.md#GetExecutionStatus) | **Get** /v0/status | Check swap execution status
 [**GetQuote**](OneClickAPI.md#GetQuote) | **Post** /v0/quote | Request a swap quote
 [**GetTokens**](OneClickAPI.md#GetTokens) | **Get** /v0/tokens | Get supported tokens
 [**SubmitDepositTx**](OneClickAPI.md#SubmitDepositTx) | **Post** /v0/deposit/submit | Submit deposit transaction hash
 
+
+
+## GetAnyInputQuoteWithdrawals
+
+> GetAnyInputQuoteWithdrawals GetAnyInputQuoteWithdrawals(ctx).DepositAddress(depositAddress).DepositMemo(depositMemo).TimestampFrom(timestampFrom).Page(page).Limit(limit).SortOrder(sortOrder).Execute()
+
+Get ANY_INPUT withdrawals
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/defuse-protocol/one-click-sdk-go"
+)
+
+func main() {
+	depositAddress := "depositAddress_example" // string | 
+	depositMemo := "depositMemo_example" // string |  (optional)
+	timestampFrom := "timestampFrom_example" // string | Filter withdrawals from this timestamp (ISO string) (optional)
+	page := float32(8.14) // float32 | Page number for pagination (default: 1) (optional)
+	limit := float32(8.14) // float32 | Number of withdrawals per page (max: 50, default: 50) (optional)
+	sortOrder := "sortOrder_example" // string | Sort order (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.OneClickAPI.GetAnyInputQuoteWithdrawals(context.Background()).DepositAddress(depositAddress).DepositMemo(depositMemo).TimestampFrom(timestampFrom).Page(page).Limit(limit).SortOrder(sortOrder).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `OneClickAPI.GetAnyInputQuoteWithdrawals``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetAnyInputQuoteWithdrawals`: GetAnyInputQuoteWithdrawals
+	fmt.Fprintf(os.Stdout, "Response from `OneClickAPI.GetAnyInputQuoteWithdrawals`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetAnyInputQuoteWithdrawalsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **depositAddress** | **string** |  | 
+ **depositMemo** | **string** |  | 
+ **timestampFrom** | **string** | Filter withdrawals from this timestamp (ISO string) | 
+ **page** | **float32** | Page number for pagination (default: 1) | 
+ **limit** | **float32** | Number of withdrawals per page (max: 50, default: 50) | 
+ **sortOrder** | **string** | Sort order | 
+
+### Return type
+
+[**GetAnyInputQuoteWithdrawals**](GetAnyInputQuoteWithdrawals.md)
+
+### Authorization
+
+[JWT-auth](../README.md#JWT-auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## GetExecutionStatus

@@ -78,6 +78,7 @@ All URIs are relative to *https://1click.chaindefuser.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*OneClickAPI* | [**GetAnyInputQuoteWithdrawals**](docs/OneClickAPI.md#getanyinputquotewithdrawals) | **Get** /v0/any-input/withdrawals | Get ANY_INPUT withdrawals
 *OneClickAPI* | [**GetExecutionStatus**](docs/OneClickAPI.md#getexecutionstatus) | **Get** /v0/status | Check swap execution status
 *OneClickAPI* | [**GetQuote**](docs/OneClickAPI.md#getquote) | **Post** /v0/quote | Request a swap quote
 *OneClickAPI* | [**GetTokens**](docs/OneClickAPI.md#gettokens) | **Get** /v0/tokens | Get supported tokens
@@ -86,8 +87,10 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [AnyInputQuoteWithdrawal](docs/AnyInputQuoteWithdrawal.md)
  - [AppFee](docs/AppFee.md)
  - [BadRequestResponse](docs/BadRequestResponse.md)
+ - [GetAnyInputQuoteWithdrawals](docs/GetAnyInputQuoteWithdrawals.md)
  - [GetExecutionStatusResponse](docs/GetExecutionStatusResponse.md)
  - [Quote](docs/Quote.md)
  - [QuoteRequest](docs/QuoteRequest.md)

@@ -21,6 +21,175 @@ import (
 // OneClickAPIService OneClickAPI service
 type OneClickAPIService service
 
+type ApiGetAnyInputQuoteWithdrawalsRequest struct {
+	ctx            context.Context
+	ApiService     *OneClickAPIService
+	depositAddress *string
+	depositMemo    *string
+	timestampFrom  *string
+	page           *float32
+	limit          *float32
+	sortOrder      *string
+}
+
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) DepositAddress(depositAddress string) ApiGetAnyInputQuoteWithdrawalsRequest {
+	r.depositAddress = &depositAddress
+	return r
+}
+
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) DepositMemo(depositMemo string) ApiGetAnyInputQuoteWithdrawalsRequest {
+	r.depositMemo = &depositMemo
+	return r
+}
+
+// Filter withdrawals from this timestamp (ISO string)
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) TimestampFrom(timestampFrom string) ApiGetAnyInputQuoteWithdrawalsRequest {
+	r.timestampFrom = &timestampFrom
+	return r
+}
+
+// Page number for pagination (default: 1)
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) Page(page float32) ApiGetAnyInputQuoteWithdrawalsRequest {
+	r.page = &page
+	return r
+}
+
+// Number of withdrawals per page (max: 50, default: 50)
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) Limit(limit float32) ApiGetAnyInputQuoteWithdrawalsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Sort order
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) SortOrder(sortOrder string) ApiGetAnyInputQuoteWithdrawalsRequest {
+	r.sortOrder = &sortOrder
+	return r
+}
+
+func (r ApiGetAnyInputQuoteWithdrawalsRequest) Execute() (*GetAnyInputQuoteWithdrawals, *http.Response, error) {
+	return r.ApiService.GetAnyInputQuoteWithdrawalsExecute(r)
+}
+
+/*
+GetAnyInputQuoteWithdrawals Get ANY_INPUT withdrawals
+
+Retrieves all withdrawals by ANY_INPUT quote with filtering, pagination and sorting
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetAnyInputQuoteWithdrawalsRequest
+*/
+func (a *OneClickAPIService) GetAnyInputQuoteWithdrawals(ctx context.Context) ApiGetAnyInputQuoteWithdrawalsRequest {
+	return ApiGetAnyInputQuoteWithdrawalsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return GetAnyInputQuoteWithdrawals
+func (a *OneClickAPIService) GetAnyInputQuoteWithdrawalsExecute(r ApiGetAnyInputQuoteWithdrawalsRequest) (*GetAnyInputQuoteWithdrawals, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *GetAnyInputQuoteWithdrawals
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "OneClickAPIService.GetAnyInputQuoteWithdrawals")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v0/any-input/withdrawals"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.depositAddress == nil {
+		return localVarReturnValue, nil, reportError("depositAddress is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "depositAddress", r.depositAddress, "form", "")
+	if r.depositMemo != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depositMemo", r.depositMemo, "form", "")
+	}
+	if r.timestampFrom != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "timestampFrom", r.timestampFrom, "form", "")
+	}
+	if r.page != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "page", r.page, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.sortOrder != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sortOrder", r.sortOrder, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v BadRequestResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetExecutionStatusRequest struct {
 	ctx            context.Context
 	ApiService     *OneClickAPIService

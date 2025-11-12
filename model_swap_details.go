@@ -49,6 +49,8 @@ type SwapDetails struct {
 	RefundedAmountFormatted *string `json:"refundedAmountFormatted,omitempty"`
 	// Refunded amount equivalent in USD
 	RefundedAmountUsd *string `json:"refundedAmountUsd,omitempty"`
+	// Referral identifier
+	Referral *string `json:"referral,omitempty"`
 }
 
 type _SwapDetails SwapDetails
@@ -490,6 +492,38 @@ func (o *SwapDetails) SetRefundedAmountUsd(v string) {
 	o.RefundedAmountUsd = &v
 }
 
+// GetReferral returns the Referral field value if set, zero value otherwise.
+func (o *SwapDetails) GetReferral() string {
+	if o == nil || IsNil(o.Referral) {
+		var ret string
+		return ret
+	}
+	return *o.Referral
+}
+
+// GetReferralOk returns a tuple with the Referral field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapDetails) GetReferralOk() (*string, bool) {
+	if o == nil || IsNil(o.Referral) {
+		return nil, false
+	}
+	return o.Referral, true
+}
+
+// HasReferral returns a boolean if a field has been set.
+func (o *SwapDetails) HasReferral() bool {
+	if o != nil && !IsNil(o.Referral) {
+		return true
+	}
+
+	return false
+}
+
+// SetReferral gets a reference to the given string and assigns it to the Referral field.
+func (o *SwapDetails) SetReferral(v string) {
+	o.Referral = &v
+}
+
 func (o SwapDetails) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -533,6 +567,9 @@ func (o SwapDetails) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RefundedAmountUsd) {
 		toSerialize["refundedAmountUsd"] = o.RefundedAmountUsd
+	}
+	if !IsNil(o.Referral) {
+		toSerialize["referral"] = o.Referral
 	}
 	return toSerialize, nil
 }
