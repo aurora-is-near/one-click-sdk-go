@@ -49,6 +49,12 @@ type SwapDetails struct {
 	RefundedAmountFormatted *string `json:"refundedAmountFormatted,omitempty"`
 	// Refunded amount equivalent in USD
 	RefundedAmountUsd *string `json:"refundedAmountUsd,omitempty"`
+	// Amount deposited to `depositAddress` onchain
+	DepositedAmount *string `json:"depositedAmount,omitempty"`
+	// Amount deposited in readable format
+	DepositedAmountFormatted *string `json:"depositedAmountFormatted,omitempty"`
+	// Amount deposited equivalent in USD
+	DepositedAmountUsd *string `json:"depositedAmountUsd,omitempty"`
 	// Referral identifier
 	Referral *string `json:"referral,omitempty"`
 }
@@ -492,6 +498,102 @@ func (o *SwapDetails) SetRefundedAmountUsd(v string) {
 	o.RefundedAmountUsd = &v
 }
 
+// GetDepositedAmount returns the DepositedAmount field value if set, zero value otherwise.
+func (o *SwapDetails) GetDepositedAmount() string {
+	if o == nil || IsNil(o.DepositedAmount) {
+		var ret string
+		return ret
+	}
+	return *o.DepositedAmount
+}
+
+// GetDepositedAmountOk returns a tuple with the DepositedAmount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapDetails) GetDepositedAmountOk() (*string, bool) {
+	if o == nil || IsNil(o.DepositedAmount) {
+		return nil, false
+	}
+	return o.DepositedAmount, true
+}
+
+// HasDepositedAmount returns a boolean if a field has been set.
+func (o *SwapDetails) HasDepositedAmount() bool {
+	if o != nil && !IsNil(o.DepositedAmount) {
+		return true
+	}
+
+	return false
+}
+
+// SetDepositedAmount gets a reference to the given string and assigns it to the DepositedAmount field.
+func (o *SwapDetails) SetDepositedAmount(v string) {
+	o.DepositedAmount = &v
+}
+
+// GetDepositedAmountFormatted returns the DepositedAmountFormatted field value if set, zero value otherwise.
+func (o *SwapDetails) GetDepositedAmountFormatted() string {
+	if o == nil || IsNil(o.DepositedAmountFormatted) {
+		var ret string
+		return ret
+	}
+	return *o.DepositedAmountFormatted
+}
+
+// GetDepositedAmountFormattedOk returns a tuple with the DepositedAmountFormatted field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapDetails) GetDepositedAmountFormattedOk() (*string, bool) {
+	if o == nil || IsNil(o.DepositedAmountFormatted) {
+		return nil, false
+	}
+	return o.DepositedAmountFormatted, true
+}
+
+// HasDepositedAmountFormatted returns a boolean if a field has been set.
+func (o *SwapDetails) HasDepositedAmountFormatted() bool {
+	if o != nil && !IsNil(o.DepositedAmountFormatted) {
+		return true
+	}
+
+	return false
+}
+
+// SetDepositedAmountFormatted gets a reference to the given string and assigns it to the DepositedAmountFormatted field.
+func (o *SwapDetails) SetDepositedAmountFormatted(v string) {
+	o.DepositedAmountFormatted = &v
+}
+
+// GetDepositedAmountUsd returns the DepositedAmountUsd field value if set, zero value otherwise.
+func (o *SwapDetails) GetDepositedAmountUsd() string {
+	if o == nil || IsNil(o.DepositedAmountUsd) {
+		var ret string
+		return ret
+	}
+	return *o.DepositedAmountUsd
+}
+
+// GetDepositedAmountUsdOk returns a tuple with the DepositedAmountUsd field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapDetails) GetDepositedAmountUsdOk() (*string, bool) {
+	if o == nil || IsNil(o.DepositedAmountUsd) {
+		return nil, false
+	}
+	return o.DepositedAmountUsd, true
+}
+
+// HasDepositedAmountUsd returns a boolean if a field has been set.
+func (o *SwapDetails) HasDepositedAmountUsd() bool {
+	if o != nil && !IsNil(o.DepositedAmountUsd) {
+		return true
+	}
+
+	return false
+}
+
+// SetDepositedAmountUsd gets a reference to the given string and assigns it to the DepositedAmountUsd field.
+func (o *SwapDetails) SetDepositedAmountUsd(v string) {
+	o.DepositedAmountUsd = &v
+}
+
 // GetReferral returns the Referral field value if set, zero value otherwise.
 func (o *SwapDetails) GetReferral() string {
 	if o == nil || IsNil(o.Referral) {
@@ -567,6 +669,15 @@ func (o SwapDetails) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RefundedAmountUsd) {
 		toSerialize["refundedAmountUsd"] = o.RefundedAmountUsd
+	}
+	if !IsNil(o.DepositedAmount) {
+		toSerialize["depositedAmount"] = o.DepositedAmount
+	}
+	if !IsNil(o.DepositedAmountFormatted) {
+		toSerialize["depositedAmountFormatted"] = o.DepositedAmountFormatted
+	}
+	if !IsNil(o.DepositedAmountUsd) {
+		toSerialize["depositedAmountUsd"] = o.DepositedAmountUsd
 	}
 	if !IsNil(o.Referral) {
 		toSerialize["referral"] = o.Referral

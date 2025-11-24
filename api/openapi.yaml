@@ -260,6 +260,7 @@ components:
           - cardano
           - ltc
           - xlayer
+          - monad
           example: near
           type: string
         symbol:
@@ -714,6 +715,15 @@ components:
         refundedAmountUsd:
           description: Refunded amount equivalent in USD
           example: "0.1"
+          type: string
+        depositedAmount:
+          description: Amount deposited to `depositAddress` onchain
+          type: string
+        depositedAmountFormatted:
+          description: Amount deposited in readable format
+          type: string
+        depositedAmountUsd:
+          description: Amount deposited equivalent in USD
           type: string
         referral:
           description: Referral identifier

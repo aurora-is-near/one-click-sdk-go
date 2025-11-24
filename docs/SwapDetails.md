@@ -18,6 +18,9 @@ Name | Type | Description | Notes
 **RefundedAmount** | Pointer to **string** | Amount of &#x60;originAsset&#x60; transferred to &#x60;refundTo&#x60; | [optional] 
 **RefundedAmountFormatted** | Pointer to **string** | Refunded amount in readable format | [optional] 
 **RefundedAmountUsd** | Pointer to **string** | Refunded amount equivalent in USD | [optional] 
+**DepositedAmount** | Pointer to **string** | Amount deposited to &#x60;depositAddress&#x60; onchain | [optional] 
+**DepositedAmountFormatted** | Pointer to **string** | Amount deposited in readable format | [optional] 
+**DepositedAmountUsd** | Pointer to **string** | Amount deposited equivalent in USD | [optional] 
 **Referral** | Pointer to **string** | Referral identifier | [optional] 
 
 ## Methods
@@ -368,6 +371,81 @@ SetRefundedAmountUsd sets RefundedAmountUsd field to given value.
 `func (o *SwapDetails) HasRefundedAmountUsd() bool`
 
 HasRefundedAmountUsd returns a boolean if a field has been set.
+
+### GetDepositedAmount
+
+`func (o *SwapDetails) GetDepositedAmount() string`
+
+GetDepositedAmount returns the DepositedAmount field if non-nil, zero value otherwise.
+
+### GetDepositedAmountOk
+
+`func (o *SwapDetails) GetDepositedAmountOk() (*string, bool)`
+
+GetDepositedAmountOk returns a tuple with the DepositedAmount field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepositedAmount
+
+`func (o *SwapDetails) SetDepositedAmount(v string)`
+
+SetDepositedAmount sets DepositedAmount field to given value.
+
+### HasDepositedAmount
+
+`func (o *SwapDetails) HasDepositedAmount() bool`
+
+HasDepositedAmount returns a boolean if a field has been set.
+
+### GetDepositedAmountFormatted
+
+`func (o *SwapDetails) GetDepositedAmountFormatted() string`
+
+GetDepositedAmountFormatted returns the DepositedAmountFormatted field if non-nil, zero value otherwise.
+
+### GetDepositedAmountFormattedOk
+
+`func (o *SwapDetails) GetDepositedAmountFormattedOk() (*string, bool)`
+
+GetDepositedAmountFormattedOk returns a tuple with the DepositedAmountFormatted field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepositedAmountFormatted
+
+`func (o *SwapDetails) SetDepositedAmountFormatted(v string)`
+
+SetDepositedAmountFormatted sets DepositedAmountFormatted field to given value.
+
+### HasDepositedAmountFormatted
+
+`func (o *SwapDetails) HasDepositedAmountFormatted() bool`
+
+HasDepositedAmountFormatted returns a boolean if a field has been set.
+
+### GetDepositedAmountUsd
+
+`func (o *SwapDetails) GetDepositedAmountUsd() string`
+
+GetDepositedAmountUsd returns the DepositedAmountUsd field if non-nil, zero value otherwise.
+
+### GetDepositedAmountUsdOk
+
+`func (o *SwapDetails) GetDepositedAmountUsdOk() (*string, bool)`
+
+GetDepositedAmountUsdOk returns a tuple with the DepositedAmountUsd field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetDepositedAmountUsd
+
+`func (o *SwapDetails) SetDepositedAmountUsd(v string)`
+
+SetDepositedAmountUsd sets DepositedAmountUsd field to given value.
+
+### HasDepositedAmountUsd
+
+`func (o *SwapDetails) HasDepositedAmountUsd() bool`
+
+HasDepositedAmountUsd returns a boolean if a field has been set.
 
 ### GetReferral
 
