@@ -22,6 +22,8 @@ var _ MappedNullable = &QuoteResponse{}
 
 // QuoteResponse struct for QuoteResponse
 type QuoteResponse struct {
+	// Unique identifier for request tracing and debugging
+	CorrelationId string `json:"correlationId"`
 	// Timestamp in ISO format that was used to derive the deposit address
 	Timestamp time.Time `json:"timestamp"`
 	// Signature of the 1Click service confirming the quote for the specific deposit address. Must be saved on the client side (along with the whole quote) in order to resolve any disputes or mistakes.
@@ -38,8 +40,9 @@ type _QuoteResponse QuoteResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewQuoteResponse(timestamp time.Time, signature string, quoteRequest QuoteRequest, quote Quote) *QuoteResponse {
+func NewQuoteResponse(correlationId string, timestamp time.Time, signature string, quoteRequest QuoteRequest, quote Quote) *QuoteResponse {
 	this := QuoteResponse{}
+	this.CorrelationId = correlationId
 	this.Timestamp = timestamp
 	this.Signature = signature
 	this.QuoteRequest = quoteRequest
@@ -53,6 +56,30 @@ func NewQuoteResponse(timestamp time.Time, signature string, quoteRequest QuoteR
 func NewQuoteResponseWithDefaults() *QuoteResponse {
 	this := QuoteResponse{}
 	return &this
+}
+
+// GetCorrelationId returns the CorrelationId field value
+func (o *QuoteResponse) GetCorrelationId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.CorrelationId
+}
+
+// GetCorrelationIdOk returns a tuple with the CorrelationId field value
+// and a boolean to check if the value has been set.
+func (o *QuoteResponse) GetCorrelationIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CorrelationId, true
+}
+
+// SetCorrelationId sets field value
+func (o *QuoteResponse) SetCorrelationId(v string) {
+	o.CorrelationId = v
 }
 
 // GetTimestamp returns the Timestamp field value
@@ -161,6 +188,7 @@ func (o QuoteResponse) MarshalJSON() ([]byte, error) {
 
 func (o QuoteResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["correlationId"] = o.CorrelationId
 	toSerialize["timestamp"] = o.Timestamp
 	toSerialize["signature"] = o.Signature
 	toSerialize["quoteRequest"] = o.QuoteRequest
@@ -173,6 +201,7 @@ func (o *QuoteResponse) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"correlationId",
 		"timestamp",
 		"signature",
 		"quoteRequest",

@@ -261,6 +261,9 @@ components:
           - ltc
           - xlayer
           - monad
+          - bch
+          - adi
+          - starknet
           example: near
           type: string
         symbol:
@@ -598,9 +601,14 @@ components:
       example:
         quote: ""
         signature: signature
+        correlationId: 550e8400-e29b-41d4-a716-446655440000
         quoteRequest: ""
         timestamp: 2019-08-24T14:15:22Z
       properties:
+        correlationId:
+          description: Unique identifier for request tracing and debugging
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
         timestamp:
           description: Timestamp in ISO format that was used to derive the deposit
             address
@@ -622,6 +630,7 @@ components:
           description: Response containing the deposit address for sending the `amount`
             of `originAsset` and the expected output amount.
       required:
+      - correlationId
       - quote
       - quoteRequest
       - signature
@@ -716,6 +725,10 @@ components:
           description: Refunded amount equivalent in USD
           example: "0.1"
           type: string
+        refundReason:
+          description: Reason for refund
+          example: PARTIAL_DEPOSIT
+          type: string
         depositedAmount:
           description: Amount deposited to `depositAddress` onchain
           type: string
@@ -738,10 +751,15 @@ components:
     GetExecutionStatusResponse:
       example:
         quoteResponse: ""
+        correlationId: 550e8400-e29b-41d4-a716-446655440000
         swapDetails: ""
         status: KNOWN_DEPOSIT_TX
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
+        correlationId:
+          description: Unique identifier for request tracing and debugging
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
         quoteResponse:
           allOf:
           - $ref: '#/components/schemas/QuoteResponse'
@@ -765,6 +783,7 @@ components:
           - $ref: '#/components/schemas/SwapDetails'
           description: Details of actual swaps and withdrawals
       required:
+      - correlationId
       - quoteResponse
       - status
       - swapDetails
@@ -879,10 +898,15 @@ components:
     SubmitDepositTxResponse:
       example:
         quoteResponse: ""
+        correlationId: 550e8400-e29b-41d4-a716-446655440000
         swapDetails: ""
         status: KNOWN_DEPOSIT_TX
         updatedAt: 2000-01-23T04:56:07.000+00:00
       properties:
+        correlationId:
+          description: Unique identifier for request tracing and debugging
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
         quoteResponse:
           allOf:
           - $ref: '#/components/schemas/QuoteResponse'
@@ -906,6 +930,7 @@ components:
           - $ref: '#/components/schemas/SwapDetails'
           description: Details of actual swaps and withdrawals
       required:
+      - correlationId
       - quoteResponse
       - status
       - swapDetails

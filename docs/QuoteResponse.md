@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**CorrelationId** | **string** | Unique identifier for request tracing and debugging | 
 **Timestamp** | **time.Time** | Timestamp in ISO format that was used to derive the deposit address | 
 **Signature** | **string** | Signature of the 1Click service confirming the quote for the specific deposit address. Must be saved on the client side (along with the whole quote) in order to resolve any disputes or mistakes. | 
 **QuoteRequest** | [**QuoteRequest**](QuoteRequest.md) | User request | 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewQuoteResponse
 
-`func NewQuoteResponse(timestamp time.Time, signature string, quoteRequest QuoteRequest, quote Quote, ) *QuoteResponse`
+`func NewQuoteResponse(correlationId string, timestamp time.Time, signature string, quoteRequest QuoteRequest, quote Quote, ) *QuoteResponse`
 
 NewQuoteResponse instantiates a new QuoteResponse object
 This constructor will assign default values to properties that have it defined,
@@ -27,6 +28,26 @@ will change when the set of required properties is changed
 NewQuoteResponseWithDefaults instantiates a new QuoteResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetCorrelationId
+
+`func (o *QuoteResponse) GetCorrelationId() string`
+
+GetCorrelationId returns the CorrelationId field if non-nil, zero value otherwise.
+
+### GetCorrelationIdOk
+
+`func (o *QuoteResponse) GetCorrelationIdOk() (*string, bool)`
+
+GetCorrelationIdOk returns a tuple with the CorrelationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCorrelationId
+
+`func (o *QuoteResponse) SetCorrelationId(v string)`
+
+SetCorrelationId sets CorrelationId field to given value.
+
 
 ### GetTimestamp
 

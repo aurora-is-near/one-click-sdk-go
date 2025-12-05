@@ -49,6 +49,8 @@ type SwapDetails struct {
 	RefundedAmountFormatted *string `json:"refundedAmountFormatted,omitempty"`
 	// Refunded amount equivalent in USD
 	RefundedAmountUsd *string `json:"refundedAmountUsd,omitempty"`
+	// Reason for refund
+	RefundReason *string `json:"refundReason,omitempty"`
 	// Amount deposited to `depositAddress` onchain
 	DepositedAmount *string `json:"depositedAmount,omitempty"`
 	// Amount deposited in readable format
@@ -498,6 +500,38 @@ func (o *SwapDetails) SetRefundedAmountUsd(v string) {
 	o.RefundedAmountUsd = &v
 }
 
+// GetRefundReason returns the RefundReason field value if set, zero value otherwise.
+func (o *SwapDetails) GetRefundReason() string {
+	if o == nil || IsNil(o.RefundReason) {
+		var ret string
+		return ret
+	}
+	return *o.RefundReason
+}
+
+// GetRefundReasonOk returns a tuple with the RefundReason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SwapDetails) GetRefundReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.RefundReason) {
+		return nil, false
+	}
+	return o.RefundReason, true
+}
+
+// HasRefundReason returns a boolean if a field has been set.
+func (o *SwapDetails) HasRefundReason() bool {
+	if o != nil && !IsNil(o.RefundReason) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefundReason gets a reference to the given string and assigns it to the RefundReason field.
+func (o *SwapDetails) SetRefundReason(v string) {
+	o.RefundReason = &v
+}
+
 // GetDepositedAmount returns the DepositedAmount field value if set, zero value otherwise.
 func (o *SwapDetails) GetDepositedAmount() string {
 	if o == nil || IsNil(o.DepositedAmount) {
@@ -669,6 +703,9 @@ func (o SwapDetails) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RefundedAmountUsd) {
 		toSerialize["refundedAmountUsd"] = o.RefundedAmountUsd
+	}
+	if !IsNil(o.RefundReason) {
+		toSerialize["refundReason"] = o.RefundReason
 	}
 	if !IsNil(o.DepositedAmount) {
 		toSerialize["depositedAmount"] = o.DepositedAmount

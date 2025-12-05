@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **RefundedAmount** | Pointer to **string** | Amount of &#x60;originAsset&#x60; transferred to &#x60;refundTo&#x60; | [optional] 
 **RefundedAmountFormatted** | Pointer to **string** | Refunded amount in readable format | [optional] 
 **RefundedAmountUsd** | Pointer to **string** | Refunded amount equivalent in USD | [optional] 
+**RefundReason** | Pointer to **string** | Reason for refund | [optional] 
 **DepositedAmount** | Pointer to **string** | Amount deposited to &#x60;depositAddress&#x60; onchain | [optional] 
 **DepositedAmountFormatted** | Pointer to **string** | Amount deposited in readable format | [optional] 
 **DepositedAmountUsd** | Pointer to **string** | Amount deposited equivalent in USD | [optional] 
@@ -371,6 +372,31 @@ SetRefundedAmountUsd sets RefundedAmountUsd field to given value.
 `func (o *SwapDetails) HasRefundedAmountUsd() bool`
 
 HasRefundedAmountUsd returns a boolean if a field has been set.
+
+### GetRefundReason
+
+`func (o *SwapDetails) GetRefundReason() string`
+
+GetRefundReason returns the RefundReason field if non-nil, zero value otherwise.
+
+### GetRefundReasonOk
+
+`func (o *SwapDetails) GetRefundReasonOk() (*string, bool)`
+
+GetRefundReasonOk returns a tuple with the RefundReason field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRefundReason
+
+`func (o *SwapDetails) SetRefundReason(v string)`
+
+SetRefundReason sets RefundReason field to given value.
+
+### HasRefundReason
+
+`func (o *SwapDetails) HasRefundReason() bool`
+
+HasRefundReason returns a boolean if a field has been set.
 
 ### GetDepositedAmount
 

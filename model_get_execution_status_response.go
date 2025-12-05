@@ -22,6 +22,8 @@ var _ MappedNullable = &GetExecutionStatusResponse{}
 
 // GetExecutionStatusResponse struct for GetExecutionStatusResponse
 type GetExecutionStatusResponse struct {
+	// Unique identifier for request tracing and debugging
+	CorrelationId string `json:"correlationId"`
 	// Quote response from the original request
 	QuoteResponse QuoteResponse `json:"quoteResponse"`
 	Status        string        `json:"status"`
@@ -37,8 +39,9 @@ type _GetExecutionStatusResponse GetExecutionStatusResponse
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewGetExecutionStatusResponse(quoteResponse QuoteResponse, status string, updatedAt time.Time, swapDetails SwapDetails) *GetExecutionStatusResponse {
+func NewGetExecutionStatusResponse(correlationId string, quoteResponse QuoteResponse, status string, updatedAt time.Time, swapDetails SwapDetails) *GetExecutionStatusResponse {
 	this := GetExecutionStatusResponse{}
+	this.CorrelationId = correlationId
 	this.QuoteResponse = quoteResponse
 	this.Status = status
 	this.UpdatedAt = updatedAt
@@ -52,6 +55,30 @@ func NewGetExecutionStatusResponse(quoteResponse QuoteResponse, status string, u
 func NewGetExecutionStatusResponseWithDefaults() *GetExecutionStatusResponse {
 	this := GetExecutionStatusResponse{}
 	return &this
+}
+
+// GetCorrelationId returns the CorrelationId field value
+func (o *GetExecutionStatusResponse) GetCorrelationId() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.CorrelationId
+}
+
+// GetCorrelationIdOk returns a tuple with the CorrelationId field value
+// and a boolean to check if the value has been set.
+func (o *GetExecutionStatusResponse) GetCorrelationIdOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.CorrelationId, true
+}
+
+// SetCorrelationId sets field value
+func (o *GetExecutionStatusResponse) SetCorrelationId(v string) {
+	o.CorrelationId = v
 }
 
 // GetQuoteResponse returns the QuoteResponse field value
@@ -160,6 +187,7 @@ func (o GetExecutionStatusResponse) MarshalJSON() ([]byte, error) {
 
 func (o GetExecutionStatusResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	toSerialize["correlationId"] = o.CorrelationId
 	toSerialize["quoteResponse"] = o.QuoteResponse
 	toSerialize["status"] = o.Status
 	toSerialize["updatedAt"] = o.UpdatedAt
@@ -172,6 +200,7 @@ func (o *GetExecutionStatusResponse) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
+		"correlationId",
 		"quoteResponse",
 		"status",
 		"updatedAt",

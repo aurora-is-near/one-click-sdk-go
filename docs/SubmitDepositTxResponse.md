@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**CorrelationId** | **string** | Unique identifier for request tracing and debugging | 
 **QuoteResponse** | [**QuoteResponse**](QuoteResponse.md) | Quote response from the original request | 
 **Status** | **string** |  | 
 **UpdatedAt** | **time.Time** | Last time the state was updated | 
@@ -13,7 +14,7 @@ Name | Type | Description | Notes
 
 ### NewSubmitDepositTxResponse
 
-`func NewSubmitDepositTxResponse(quoteResponse QuoteResponse, status string, updatedAt time.Time, swapDetails SwapDetails, ) *SubmitDepositTxResponse`
+`func NewSubmitDepositTxResponse(correlationId string, quoteResponse QuoteResponse, status string, updatedAt time.Time, swapDetails SwapDetails, ) *SubmitDepositTxResponse`
 
 NewSubmitDepositTxResponse instantiates a new SubmitDepositTxResponse object
 This constructor will assign default values to properties that have it defined,
@@ -27,6 +28,26 @@ will change when the set of required properties is changed
 NewSubmitDepositTxResponseWithDefaults instantiates a new SubmitDepositTxResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetCorrelationId
+
+`func (o *SubmitDepositTxResponse) GetCorrelationId() string`
+
+GetCorrelationId returns the CorrelationId field if non-nil, zero value otherwise.
+
+### GetCorrelationIdOk
+
+`func (o *SubmitDepositTxResponse) GetCorrelationIdOk() (*string, bool)`
+
+GetCorrelationIdOk returns a tuple with the CorrelationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCorrelationId
+
+`func (o *SubmitDepositTxResponse) SetCorrelationId(v string)`
+
+SetCorrelationId sets CorrelationId field to given value.
+
 
 ### GetQuoteResponse
 
