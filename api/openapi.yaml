@@ -263,7 +263,9 @@ components:
           - monad
           - bch
           - adi
+          - plasma
           - starknet
+          - aleo
           example: near
           type: string
         symbol:
