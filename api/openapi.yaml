@@ -246,6 +246,7 @@ components:
           - btc
           - sol
           - ton
+          - dash
           - doge
           - xrp
           - zec
@@ -264,6 +265,7 @@ components:
           - bch
           - adi
           - plasma
+          - scroll
           - starknet
           - aleo
           example: near
@@ -587,6 +589,11 @@ components:
 
             **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient `storage_deposit` or if the recipient does not implement `ft_on_transfer` method.
           example: smart-contract-recipient.near
+          type: string
+        refundFee:
+          description: Fee charged for refunding assets to the refund address in the
+            smallest unit of the origin asset
+          example: "10000"
           type: string
       required:
       - amountIn

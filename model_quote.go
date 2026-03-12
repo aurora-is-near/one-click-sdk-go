@@ -54,6 +54,8 @@ type Quote struct {
 	VirtualChainRefundRecipient *string `json:"virtualChainRefundRecipient,omitempty"`
 	// **HIGHLY EXPERIMENTAL** Message passed to `ft_transfer_call` when withdrawing assets to NEAR.  Otherwise, `ft_transfer` will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient `storage_deposit` or if the recipient does not implement `ft_on_transfer` method.
 	CustomRecipientMsg *string `json:"customRecipientMsg,omitempty"`
+	// Fee charged for refunding assets to the refund address in the smallest unit of the origin asset
+	RefundFee *string `json:"refundFee,omitempty"`
 }
 
 type _Quote Quote
@@ -524,6 +526,38 @@ func (o *Quote) SetCustomRecipientMsg(v string) {
 	o.CustomRecipientMsg = &v
 }
 
+// GetRefundFee returns the RefundFee field value if set, zero value otherwise.
+func (o *Quote) GetRefundFee() string {
+	if o == nil || IsNil(o.RefundFee) {
+		var ret string
+		return ret
+	}
+	return *o.RefundFee
+}
+
+// GetRefundFeeOk returns a tuple with the RefundFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Quote) GetRefundFeeOk() (*string, bool) {
+	if o == nil || IsNil(o.RefundFee) {
+		return nil, false
+	}
+	return o.RefundFee, true
+}
+
+// HasRefundFee returns a boolean if a field has been set.
+func (o *Quote) HasRefundFee() bool {
+	if o != nil && !IsNil(o.RefundFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetRefundFee gets a reference to the given string and assigns it to the RefundFee field.
+func (o *Quote) SetRefundFee(v string) {
+	o.RefundFee = &v
+}
+
 func (o Quote) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -563,6 +597,9 @@ func (o Quote) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CustomRecipientMsg) {
 		toSerialize["customRecipientMsg"] = o.CustomRecipientMsg
+	}
+	if !IsNil(o.RefundFee) {
+		toSerialize["refundFee"] = o.RefundFee
 	}
 	return toSerialize, nil
 }

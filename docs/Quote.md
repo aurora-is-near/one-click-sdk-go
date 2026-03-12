@@ -20,6 +20,7 @@ Name | Type | Description | Notes
 **VirtualChainRecipient** | Pointer to **string** | EVM address of a transfer recipient in a virtual chain | [optional] 
 **VirtualChainRefundRecipient** | Pointer to **string** | EVM address of a refund recipient in a virtual chain | [optional] 
 **CustomRecipientMsg** | Pointer to **string** | **HIGHLY EXPERIMENTAL** Message passed to &#x60;ft_transfer_call&#x60; when withdrawing assets to NEAR.  Otherwise, &#x60;ft_transfer&#x60; will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient &#x60;storage_deposit&#x60; or if the recipient does not implement &#x60;ft_on_transfer&#x60; method. | [optional] 
+**RefundFee** | Pointer to **string** | Fee charged for refunding assets to the refund address in the smallest unit of the origin asset | [optional] 
 
 ## Methods
 
@@ -394,6 +395,31 @@ SetCustomRecipientMsg sets CustomRecipientMsg field to given value.
 `func (o *Quote) HasCustomRecipientMsg() bool`
 
 HasCustomRecipientMsg returns a boolean if a field has been set.
+
+### GetRefundFee
+
+`func (o *Quote) GetRefundFee() string`
+
+GetRefundFee returns the RefundFee field if non-nil, zero value otherwise.
+
+### GetRefundFeeOk
+
+`func (o *Quote) GetRefundFeeOk() (*string, bool)`
+
+GetRefundFeeOk returns a tuple with the RefundFee field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRefundFee
+
+`func (o *Quote) SetRefundFee(v string)`
+
+SetRefundFee sets RefundFee field to given value.
+
+### HasRefundFee
+
+`func (o *Quote) HasRefundFee() bool`
+
+HasRefundFee returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
