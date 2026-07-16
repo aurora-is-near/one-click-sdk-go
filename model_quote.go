@@ -56,6 +56,10 @@ type Quote struct {
 	CustomRecipientMsg *string `json:"customRecipientMsg,omitempty"`
 	// Fee charged for refunding assets to the refund address in the smallest unit of the origin asset
 	RefundFee *string `json:"refundFee,omitempty"`
+	// Fee charged for withdrawing assets to the destination chain in the smallest unit of the destination asset (e.g. Solana rent / withdraw fee)
+	WithdrawFee *string `json:"withdrawFee,omitempty"`
+	// CorrelationId may be echoed on the nested quote object by the API (in addition to QuoteResponse.correlationId).
+	CorrelationId *string `json:"correlationId,omitempty"`
 }
 
 type _Quote Quote
@@ -558,6 +562,38 @@ func (o *Quote) SetRefundFee(v string) {
 	o.RefundFee = &v
 }
 
+// GetWithdrawFee returns the WithdrawFee field value if set, zero value otherwise.
+func (o *Quote) GetWithdrawFee() string {
+	if o == nil || IsNil(o.WithdrawFee) {
+		var ret string
+		return ret
+	}
+	return *o.WithdrawFee
+}
+
+// GetWithdrawFeeOk returns a tuple with the WithdrawFee field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Quote) GetWithdrawFeeOk() (*string, bool) {
+	if o == nil || IsNil(o.WithdrawFee) {
+		return nil, false
+	}
+	return o.WithdrawFee, true
+}
+
+// HasWithdrawFee returns a boolean if a field has been set.
+func (o *Quote) HasWithdrawFee() bool {
+	if o != nil && !IsNil(o.WithdrawFee) {
+		return true
+	}
+
+	return false
+}
+
+// SetWithdrawFee gets a reference to the given string and assigns it to the WithdrawFee field.
+func (o *Quote) SetWithdrawFee(v string) {
+	o.WithdrawFee = &v
+}
+
 func (o Quote) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -600,6 +636,12 @@ func (o Quote) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RefundFee) {
 		toSerialize["refundFee"] = o.RefundFee
+	}
+	if !IsNil(o.WithdrawFee) {
+		toSerialize["withdrawFee"] = o.WithdrawFee
+	}
+	if !IsNil(o.CorrelationId) {
+		toSerialize["correlationId"] = o.CorrelationId
 	}
 	return toSerialize, nil
 }

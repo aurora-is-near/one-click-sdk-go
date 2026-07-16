@@ -595,6 +595,12 @@ components:
             smallest unit of the origin asset
           example: "10000"
           type: string
+        withdrawFee:
+          description: Fee charged for withdrawing assets to the destination chain
+            in the smallest unit of the destination asset (e.g. Solana rent / withdraw
+            fee)
+          example: "138652"
+          type: string
       required:
       - amountIn
       - amountInFormatted
