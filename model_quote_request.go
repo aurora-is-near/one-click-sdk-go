@@ -64,6 +64,10 @@ type QuoteRequest struct {
 	QuoteWaitingTimeMs *float32 `json:"quoteWaitingTimeMs,omitempty"`
 	// List of recipients and their fees
 	AppFees []AppFee `json:"appFees,omitempty"`
+	// Quote confidentiality mode echoed by the API (e.g. "public")
+	Confidentiality *string `json:"confidentiality,omitempty"`
+	// Whether the quote is insured (echoed by the API on quoteRequest)
+	Insured *bool `json:"insured,omitempty"`
 }
 
 type _QuoteRequest QuoteRequest
@@ -681,6 +685,70 @@ func (o *QuoteRequest) SetAppFees(v []AppFee) {
 	o.AppFees = v
 }
 
+// GetConfidentiality returns the Confidentiality field value if set, zero value otherwise.
+func (o *QuoteRequest) GetConfidentiality() string {
+	if o == nil || IsNil(o.Confidentiality) {
+		var ret string
+		return ret
+	}
+	return *o.Confidentiality
+}
+
+// GetConfidentialityOk returns a tuple with the Confidentiality field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRequest) GetConfidentialityOk() (*string, bool) {
+	if o == nil || IsNil(o.Confidentiality) {
+		return nil, false
+	}
+	return o.Confidentiality, true
+}
+
+// HasConfidentiality returns a boolean if a field has been set.
+func (o *QuoteRequest) HasConfidentiality() bool {
+	if o != nil && !IsNil(o.Confidentiality) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfidentiality gets a reference to the given string and assigns it to the Confidentiality field.
+func (o *QuoteRequest) SetConfidentiality(v string) {
+	o.Confidentiality = &v
+}
+
+// GetInsured returns the Insured field value if set, zero value otherwise.
+func (o *QuoteRequest) GetInsured() bool {
+	if o == nil || IsNil(o.Insured) {
+		var ret bool
+		return ret
+	}
+	return *o.Insured
+}
+
+// GetInsuredOk returns a tuple with the Insured field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRequest) GetInsuredOk() (*bool, bool) {
+	if o == nil || IsNil(o.Insured) {
+		return nil, false
+	}
+	return o.Insured, true
+}
+
+// HasInsured returns a boolean if a field has been set.
+func (o *QuoteRequest) HasInsured() bool {
+	if o != nil && !IsNil(o.Insured) {
+		return true
+	}
+
+	return false
+}
+
+// SetInsured gets a reference to the given bool and assigns it to the Insured field.
+func (o *QuoteRequest) SetInsured(v bool) {
+	o.Insured = &v
+}
+
 func (o QuoteRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -729,6 +797,12 @@ func (o QuoteRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.AppFees) {
 		toSerialize["appFees"] = o.AppFees
+	}
+	if !IsNil(o.Confidentiality) {
+		toSerialize["confidentiality"] = o.Confidentiality
+	}
+	if !IsNil(o.Insured) {
+		toSerialize["insured"] = o.Insured
 	}
 	return toSerialize, nil
 }

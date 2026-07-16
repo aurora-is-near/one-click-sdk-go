@@ -25,6 +25,8 @@ Name | Type | Description | Notes
 **Referral** | Pointer to **string** | Referral identifier (lowercase only). It will be reflected in the on-chain data and displayed on public analytics platforms. | [optional] 
 **QuoteWaitingTimeMs** | Pointer to **float32** | Time in milliseconds the user is willing to wait for a quote from the relay. **If you want to receive the fastest quote - use &#x60;0&#x60; as a value**  | [optional] [default to 3000]
 **AppFees** | Pointer to [**[]AppFee**](AppFee.md) | List of recipients and their fees | [optional] 
+**Confidentiality** | Pointer to **string** | Quote confidentiality mode echoed by the API | [optional] 
+**Insured** | Pointer to **bool** | Whether the quote is insured (echoed by the API on quoteRequest) | [optional] 
 
 ## Methods
 
