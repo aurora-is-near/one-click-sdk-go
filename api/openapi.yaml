@@ -503,6 +503,11 @@ components:
           description: Whether the quote is insured (echoed by the API on quoteRequest)
           example: false
           type: boolean
+        correlationId:
+          description: Echoed by the API on the nested quoteRequest object (in addition
+            to QuoteResponse.correlationId)
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
       required:
       - amount
       - deadline
@@ -608,6 +613,11 @@ components:
             in the smallest unit of the destination asset (e.g. Solana rent / withdraw
             fee)
           example: "138652"
+          type: string
+        correlationId:
+          description: Echoed by the API on the nested quote object (in addition to
+            QuoteResponse.correlationId)
+          example: 550e8400-e29b-41d4-a716-446655440000
           type: string
       required:
       - amountIn

@@ -27,6 +27,7 @@ Name | Type | Description | Notes
 **AppFees** | Pointer to [**[]AppFee**](AppFee.md) | List of recipients and their fees | [optional] 
 **Confidentiality** | Pointer to **string** | Quote confidentiality mode echoed by the API | [optional] 
 **Insured** | Pointer to **bool** | Whether the quote is insured (echoed by the API on quoteRequest) | [optional] 
+**CorrelationId** | Pointer to **string** | Echoed by the API on the nested quoteRequest object (in addition to QuoteResponse.correlationId) | [optional] 
 
 ## Methods
 
@@ -511,6 +512,31 @@ SetAppFees sets AppFees field to given value.
 `func (o *QuoteRequest) HasAppFees() bool`
 
 HasAppFees returns a boolean if a field has been set.
+
+### GetCorrelationId
+
+`func (o *QuoteRequest) GetCorrelationId() string`
+
+GetCorrelationId returns the CorrelationId field if non-nil, zero value otherwise.
+
+### GetCorrelationIdOk
+
+`func (o *QuoteRequest) GetCorrelationIdOk() (*string, bool)`
+
+GetCorrelationIdOk returns a tuple with the CorrelationId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetCorrelationId
+
+`func (o *QuoteRequest) SetCorrelationId(v string)`
+
+SetCorrelationId sets CorrelationId field to given value.
+
+### HasCorrelationId
+
+`func (o *QuoteRequest) HasCorrelationId() bool`
+
+HasCorrelationId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

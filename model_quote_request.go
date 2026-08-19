@@ -68,6 +68,8 @@ type QuoteRequest struct {
 	Confidentiality *string `json:"confidentiality,omitempty"`
 	// Whether the quote is insured (echoed by the API on quoteRequest)
 	Insured *bool `json:"insured,omitempty"`
+	// CorrelationId may be echoed on the nested quoteRequest object by the API (in addition to QuoteResponse.correlationId).
+	CorrelationId *string `json:"correlationId,omitempty"`
 }
 
 type _QuoteRequest QuoteRequest
@@ -749,6 +751,38 @@ func (o *QuoteRequest) SetInsured(v bool) {
 	o.Insured = &v
 }
 
+// GetCorrelationId returns the CorrelationId field value if set, zero value otherwise.
+func (o *QuoteRequest) GetCorrelationId() string {
+	if o == nil || IsNil(o.CorrelationId) {
+		var ret string
+		return ret
+	}
+	return *o.CorrelationId
+}
+
+// GetCorrelationIdOk returns a tuple with the CorrelationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QuoteRequest) GetCorrelationIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CorrelationId) {
+		return nil, false
+	}
+	return o.CorrelationId, true
+}
+
+// HasCorrelationId returns a boolean if a field has been set.
+func (o *QuoteRequest) HasCorrelationId() bool {
+	if o != nil && !IsNil(o.CorrelationId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCorrelationId gets a reference to the given string and assigns it to the CorrelationId field.
+func (o *QuoteRequest) SetCorrelationId(v string) {
+	o.CorrelationId = &v
+}
+
 func (o QuoteRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -803,6 +837,9 @@ func (o QuoteRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Insured) {
 		toSerialize["insured"] = o.Insured
+	}
+	if !IsNil(o.CorrelationId) {
+		toSerialize["correlationId"] = o.CorrelationId
 	}
 	return toSerialize, nil
 }

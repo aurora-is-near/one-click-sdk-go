@@ -22,6 +22,7 @@ Name | Type | Description | Notes
 **CustomRecipientMsg** | Pointer to **string** | **HIGHLY EXPERIMENTAL** Message passed to &#x60;ft_transfer_call&#x60; when withdrawing assets to NEAR.  Otherwise, &#x60;ft_transfer&#x60; will be used.  **WARNING**: Funds will be lost if used with non NEP-141 tokens, in case of insufficient &#x60;storage_deposit&#x60; or if the recipient does not implement &#x60;ft_on_transfer&#x60; method. | [optional] 
 **RefundFee** | Pointer to **string** | Fee charged for refunding assets to the refund address in the smallest unit of the origin asset | [optional] 
 **WithdrawFee** | Pointer to **string** | Fee charged for withdrawing assets to the destination chain in the smallest unit of the destination asset (e.g. Solana rent / withdraw fee) | [optional] 
+**CorrelationId** | Pointer to **string** | Echoed by the API on the nested quote object (in addition to QuoteResponse.correlationId) | [optional] 
 
 ## Methods
 
