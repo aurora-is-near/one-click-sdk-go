@@ -14,6 +14,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // checks if the BadRequestResponse type satisfies the MappedNullable interface at compile time
@@ -21,7 +22,10 @@ var _ MappedNullable = &BadRequestResponse{}
 
 // BadRequestResponse struct for BadRequestResponse
 type BadRequestResponse struct {
-	Message string `json:"message"`
+	Message       string     `json:"message"`
+	CorrelationId *string    `json:"correlationId,omitempty"`
+	Timestamp     *time.Time `json:"timestamp,omitempty"`
+	Path          *string    `json:"path,omitempty"`
 }
 
 type _BadRequestResponse BadRequestResponse
@@ -79,6 +83,15 @@ func (o BadRequestResponse) MarshalJSON() ([]byte, error) {
 func (o BadRequestResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["message"] = o.Message
+	if !IsNil(o.CorrelationId) {
+		toSerialize["correlationId"] = o.CorrelationId
+	}
+	if !IsNil(o.Timestamp) {
+		toSerialize["timestamp"] = o.Timestamp
+	}
+	if !IsNil(o.Path) {
+		toSerialize["path"] = o.Path
+	}
 	return toSerialize, nil
 }
 

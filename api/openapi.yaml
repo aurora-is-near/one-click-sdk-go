@@ -676,6 +676,15 @@ components:
         message:
           example: error message
           type: string
+        correlationId:
+          description: Request id echoed on error bodies
+          type: string
+        timestamp:
+          format: date-time
+          type: string
+        path:
+          example: /v0/quote
+          type: string
       required:
       - message
       type: object

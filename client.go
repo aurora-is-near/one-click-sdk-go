@@ -654,7 +654,39 @@ func formatErrorMessage(status string, v interface{}) string {
 		if field != (reflect.Value{}) {
 			str = fmt.Sprintf("%s (%s)", str, field.Interface())
 		}
+
+		if strings.TrimSpace(str) == "" {
+			field = metaValue.FieldByName("Message")
+			if field != (reflect.Value{}) {
+				str = fmt.Sprintf("%s", field.Interface())
+			}
+		}
 	}
 
 	return strings.TrimSpace(fmt.Sprintf("%s %s", status, str))
+}
+
+// badRequestOpenAPIError unpacks a 400 body. On decode failure (unknown fields,
+// extra API keys) the raw body is kept so callers still see the real message.
+func (c *APIClient) badRequestOpenAPIError(status, contentType string, body []byte) *GenericOpenAPIError {
+	newErr := &GenericOpenAPIError{
+		body:  body,
+		error: status,
+	}
+	var v BadRequestResponse
+	if err := c.decode(&v, body, contentType); err != nil {
+		if msg := strings.TrimSpace(string(body)); msg != "" {
+			newErr.error = fmt.Sprintf("%s: %s", status, msg)
+		} else {
+			newErr.error = err.Error()
+		}
+		return newErr
+	}
+	if v.Message != "" {
+		newErr.error = fmt.Sprintf("%s: %s", status, v.Message)
+	} else {
+		newErr.error = formatErrorMessage(status, &v)
+	}
+	newErr.model = v
+	return newErr
 }

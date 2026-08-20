@@ -5,6 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Message** | **string** |  | 
+**CorrelationId** | Pointer to **string** | Request id echoed on error bodies | [optional] 
+**Timestamp** | Pointer to **time.Time** |  | [optional] 
+**Path** | Pointer to **string** |  | [optional]  
 
 ## Methods
 

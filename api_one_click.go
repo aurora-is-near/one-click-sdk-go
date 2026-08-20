@@ -424,15 +424,11 @@ func (a *OneClickAPIService) GetQuoteExecute(r ApiGetQuoteRequest) (*QuoteRespon
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v BadRequestResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
+			return localVarReturnValue, localVarHTTPResponse, a.client.badRequestOpenAPIError(
+				localVarHTTPResponse.Status,
+				localVarHTTPResponse.Header.Get("Content-Type"),
+				localVarBody,
+			)
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
@@ -650,15 +646,11 @@ func (a *OneClickAPIService) SubmitDepositTxExecute(r ApiSubmitDepositTxRequest)
 			error: localVarHTTPResponse.Status,
 		}
 		if localVarHTTPResponse.StatusCode == 400 {
-			var v BadRequestResponse
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
+			return localVarReturnValue, localVarHTTPResponse, a.client.badRequestOpenAPIError(
+				localVarHTTPResponse.Status,
+				localVarHTTPResponse.Header.Get("Content-Type"),
+				localVarBody,
+			)
 		}
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
